@@ -1,4 +1,4 @@
-#1er intento
+#23 funciones
 import netmiko
 
 def establecer_conexion(ip, usuario, contraseña, router):
