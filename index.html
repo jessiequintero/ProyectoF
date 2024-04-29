@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulario de Configuración</title>
+</head>
+<body>
+<h2>Formulario de Configuración</h2>
+<form id="configForm">
+  <label for="ip">Dirección IP:</label><br>
+  <input type="text" id="ip" name="ip"><br>
+  <label for="usuario">Usuario:</label><br>
+  <input type="text" id="usuario" name="usuario"><br>
+  <label for="contraseña">Contraseña:</label><br>
+  <input type="password" id="contraseña" name="contraseña"><br><br>
+  <button type="button" onclick="enviarDatos()">Enviar</button>
+</form>
+
+<script>
+function enviarDatos() {
+  var ip = document.getElementById("ip").value;
+  var usuario = document.getElementById("usuario").value;
+  var contraseña = document.getElementById("contraseña").value;
+
+  // Objeto con los datos a enviar
+  var datos = {
+    ip: ip,
+    usuario: usuario,
+    contraseña: contraseña
+  };
+
+  // Realizar solicitud POST
+  fetch('http://localhost:3000/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datos)
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error en la solicitud');
+    }
+    return response.json();
+  })
+  .then(data => {
+    console.log(data); // Datos recibidos del servidor
+    alert('Configuración exitosa');
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('Error en la configuración');
+  });
+}
+</script>
+
+</body>
+</html>

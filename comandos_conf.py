@@ -52,8 +52,6 @@ def agregar_usuario(net_connect, username, password, privilege_level):
 def crear_acl(net_connect, acl_number, acl_type, source, destination=None, permit=True):
     """
     Crea una lista de acceso en el dispositivo.
-    
-    Parámetros:
         - acl_number: El número de la lista de acceso
         - acl_type: El tipo de lista de acceso
         - source: La dirección IP de origen
@@ -145,8 +143,6 @@ def configurar_dhcp_ipv6(net_connect, pool_name, prefix, dns_server, domain_name
 
 def configurar_nat(net_connect, nat_type, inside_local, access_list, pool_name=None, inside_global=None, outside_global=None, netmask=None):
     """
-    Configura NAT en el dispositivo.
-        net_connect: Objeto de conexión netmiko.
         nat_type: Tipo de NAT: 'estatico', 'dinamico' o 'pat'.
         inside_local: Dirección IP local dentro de la red privada.
         access_list: Nombre de la lista de acceso para el tráfico.
@@ -176,9 +172,8 @@ def configurar_nat(net_connect, nat_type, inside_local, access_list, pool_name=N
 
 def configurar_interfaz_nat(net_connect, interface, direction):
     """
-        net_connect: Objeto de conexión netmiko.
-        interface (str): Nombre de la interfaz.
-        direction (str): Dirección de la interfaz para NAT: 'inside' o 'outside'.
+        interface: Nombre de la interfaz.
+        direction: Dirección de la interfaz para NAT: 'inside' o 'outside'.
     """
     if direction not in ['inside', 'outside']:
         print("Dirección de la interfaz no válida. Debe ser 'inside' o 'outside'.")
@@ -206,8 +201,6 @@ def configurar_ip_switch(net_connect, interface, ip_address, subnet_mask):
 def configurar_default_gateway(net_connect, gateway):
     """
     Configura la puerta de enlace predeterminada en un switch Cisco.
-
-        net_connect: Objeto de conexión netmiko.
         gateway: Dirección IP de la puerta de enlace predeterminada.
     """
     config_commands = [f'ip default-gateway {gateway}']
@@ -217,8 +210,7 @@ def configurar_default_gateway(net_connect, gateway):
 def configurar_troncales(net_connect, interface_range):
     """
     Configura un rango de interfaces como troncales en un switch Cisco.
-        net_connect: Objeto de conexión netmiko.
-        interface_range (str): Rango de interfaces a configurar como troncales (por ejemplo, 'GigabitEthernet0/1-24').
+        interface_range: Rango de interfaces a configurar como troncales
     """
     config_commands = [f'interface range {interface_range}', 'switchport mode trunk']
     comando = net_connect.send_config_set(config_commands)
@@ -259,7 +251,6 @@ def configurar_vtp(net_connect, vtp_domain, vtp_password, mode):
 
 def crear_vlan(net_connect, vlan_id, vlan_name, interface_range):
     """
-        net_connect: Objeto de conexión netmiko.
         vlan_id: ID de la VLAN a crear.
         vlan_name: Nombre de la VLAN.
         interface_range: Rango de interfaces a configurar en modo de acceso
@@ -273,7 +264,6 @@ def crear_vlan(net_connect, vlan_id, vlan_name, interface_range):
     ]
     comando = net_connect.send_config_set(config_commands)
     print(comando)
-
 
 def abrir_terminal(net_connect):
     """
